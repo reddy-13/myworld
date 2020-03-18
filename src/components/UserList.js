@@ -4,12 +4,10 @@ import {View, Text, Image, StyleSheet} from 'react-native';
 const UserList = props => {
   return (
     <View style={styles.container}>
-      <Image source={{uri: props.uri}} style={styles.image} />
+      <Image source={{uri: props.image}} style={styles.image} />
       <View style={styles.userView}>
         <Text style={styles.userStyle}>{props.userName}</Text>
-      </View>
-      <View style={styles.userView}>
-        <Text style={styles.userchat}>{props.userName}</Text>
+        <Text style={styles.userchat}>Hello</Text>
       </View>
     </View>
   );
@@ -21,6 +19,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    alignItems: 'center',
     marginTop: 5,
     marginBottom: 5,
   },
@@ -34,7 +33,6 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
   },
   userView: {
-    justifyContent: 'center',
     fontWeight: 'bold',
   },
   userStyle: {
@@ -47,6 +45,6 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     color: '#e6ecf0',
     marginLeft: 15,
-    marginTop: 20,
+    marginTop: 5,
   },
 });

@@ -18,7 +18,6 @@ const SearchBar = props => {
 
 const style = StyleSheet.create({
   customSearchInput: {
-    backgroundColor: 'rgba(0, 0, 0, 0.30)',
     width: '90%',
     height: 45,
 

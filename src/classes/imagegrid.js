@@ -1,46 +1,58 @@
-//MyWorld app HomeScreen
-//Home Screen For Video Feeds
-//code date :  28-02-2020 //
-
-import React from 'react';
-import {View, Image, StyleSheet, Dimensions} from 'react-native';
-import {RecyclerListView, DataProvider} from 'recyclerlistview';
-import faker from 'faker';
-// import ViewPager from '@react-native-community/viewpager';
-import LayoutProvider from './LayoutProvider';
-// import BottomNav from '../../components/BottomNav';
-
+import React, {Component} from 'react';
+import {Text, View, StyleSheet, Image, Dimensions} from 'react-native';
+import {RecyclerListView, DataProvider, LayoutProvider} from 'recyclerlistview';
+// import faker from 'faker';
+import genImage from '@functions/genImage';
 const {width, height} = Dimensions.get('window');
-
-class RecycleView extends React.Component {
+const ViewTypes = {
+  TAG: 0,
+  IMAGE: 1,
+};
+const imageViewTypes = {
+  FUll: 0,
+  HALF_RIGHT: 1,
+  HELF_LEFT: 3,
+};
+export default class imagegrid extends Component {
   constructor(props) {
     super(props);
-    let list = [
-      'ITEM_SPAN_1',
-      'ITEM_SPAN_2',
-      'ITEM_SPAN_3',
-      'ITEM_SPAN_4',
-      'ITEM_SPAN_5',
-    ];
+    let list = {
+      ITEM_SPAN_1: 1,
+      ITEM_SPAN_2: 2,
+      ITEM_SPAN_3: 3,
+      ITEM_SPAN_4: 4,
+      ITEM_SPAN_5: 5,
+    };
     const fakeData = [];
-    for (let i = 0; i < 100; i++) {
-      for (let j = 0; j < list.length; j++) {
-        // console.log(list[j]);
 
-        fakeData.push({
-          type: list[j],
-          item: {
-            id: i,
-            image: faker.image.avatar(),
-          },
-        });
-      }
-    }
+    genImage(list, fakeData, 20);
+
     this.state = {
       list: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(fakeData),
     };
-
-    this.layoutProvider = new LayoutProvider(this.state.list);
+    this.LayoutProvider = new LayoutProvider(
+      index => {
+        if (index % 3 === 0) {
+          return list.ITEM_SPAN_1;
+        } else {
+          return list.ITEM_SPAN_2;
+        }
+      },
+      (type, dim) => {
+        switch (type) {
+          case 'ITEM_SPAN_1':
+            return 2;
+          case 'ITEM_SPAN_2':
+            return 2;
+          case 'ITEM_SPAN_3':
+            return 2;
+          case 'ITEM_SPAN_4':
+            return 2;
+          case 'ITEM_SPAN_5':
+            return 4;
+        }
+      },
+    );
 
     this._rowRenderer = this._rowRenderer.bind(this);
   }
@@ -51,7 +63,7 @@ class RecycleView extends React.Component {
       case 'ITEM_SPAN_1':
         return (
           <View style={{borderColor: '#fff', borderWidth: 1}}>
-            <Image style={{height: width / 2}} source={{uri: image}} />
+            <Image style={{height: 100}} source={{uri: image}} />
           </View>
         );
       case 'ITEM_SPAN_2':
@@ -75,27 +87,19 @@ class RecycleView extends React.Component {
       case 'ITEM_SPAN_5':
         return (
           <View style={{borderColor: '#fff', borderWidth: 1}}>
-            <Image style={{height: 200}} source={{uri: image}} />
+            <Image style={{height: 200, width: 100}} source={{uri: image}} />
           </View>
         );
     }
   };
-
-  // const nav = this.props.navigation; // storing navigation prop
-  // nav.setOptions({
-  //     headerMode :'none', //has different modes float,
-  //     title : "Home Feed", // sets title
-  //     headerShown:false // hides header
-  // }); // setting navigation name on screen
   render() {
     return (
       <View style={styles.container}>
         <RecyclerListView
-          // style={{flex: 1, height: 400, width: '100%', borderTopLeftRadius: 25}}
-          rowRenderer={this._rowRenderer}
+          getHeightOrWidth="400"
           dataProvider={this.state.list}
-          layoutProvider={this.layoutProvider}
-          isHorizontal={true}
+          rowRenderer={this._rowRenderer}
+          layoutProvider={this.LayoutProvider}
         />
       </View>
     );
@@ -126,5 +130,3 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
 });
-
-export default RecycleView;

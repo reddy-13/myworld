@@ -21,34 +21,22 @@ import search from '@screens/search';
 import ChatScreen from '@screens/Chat';
 import {Button} from '@constants/atoms/Button';
 import {Text} from '@constants/atoms/Text';
+import StatusModal from '@components/StatusModal';
+import SearchBar from '@components/SearchBar';
+// import classes for testing
+import imagegrid from '@classes/imagegrid';
 // inistiating Stact navigaton
 const Stack = createStackNavigator();
 
-const StoryBtn = () => {
-  return (
-    <Button
-      onPress={() => alert('This is a button!')}
-      color="#ddd"
-      style={{
-        borderRadius: 50,
-        height: 50,
-        width: 50,
-        marginLeft: 10,
-        marginTop: 40,
-        elevation: 0,
-      }}></Button>
-  );
-};
-
-const showStoryButton = route => {
-  const routeName = route.state
-    ? route.state.routes[route.state.index].name
-    : 'Home';
-  switch (routeName) {
-    case 'Home':
-      return StoryBtn;
-  }
-};
+// const showStoryButton = route => {
+//   const routeName = route.state
+//     ? route.state.routes[route.state.index].name
+//     : 'Home';
+//   switch (routeName) {
+//     case 'Home':
+//       return StoryBtn;
+//   }
+// };
 
 const HeaderTrans = route => {
   const routeName = route.state
@@ -63,6 +51,14 @@ const HeaderTrans = route => {
       break;
     case 'Camera':
       return true;
+      break;
+    case 'Chat':
+      return false;
+      break;
+    case 'Profile':
+      return true;
+      break;
+    case 'StatusModal':
       break;
     case 'Search':
       return true;
@@ -88,6 +84,30 @@ const enableGesture = route => {
   }
 };
 
+const showHeader = route => {
+  const routeName = route.state
+    ? route.state.routes[route.state.index].name
+    : 'Home';
+  switch (routeName) {
+    case 'Home':
+      return false;
+      break;
+    case 'Search':
+      return false;
+      break;
+    case 'Camera':
+      return true;
+      break;
+    case 'Chat':
+      return true;
+      break;
+    case 'Profile':
+      return true;
+      break;
+    case 'Search':
+      return false;
+  }
+};
 const gestureDirection = route => {
   const routeName = route.state
     ? route.state.routes[route.state.index].name
@@ -101,7 +121,14 @@ const gestureDirection = route => {
 //Main navigator
 const MainNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="Image"
+        component={imagegrid}
+        option={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="Home"
         component={BottomNav}
@@ -110,7 +137,7 @@ const MainNavigator = () => {
           animationEnabled: true,
           headerTransparent: HeaderTrans(route),
           headerTitle: '',
-          headerRight: showStoryButton(route),
+          // headerRight: showStoryButton(route),
         })}
       />
       <Stack.Screen
@@ -122,7 +149,24 @@ const MainNavigator = () => {
       <Stack.Screen
         name="Chat"
         component={ChatScreen}
-        options={{headerShown: true}}
+        options={{
+          headerStyle: {
+            backgroundColor: '#fff',
+            elevation: 0,
+          },
+          headerTitleContainerStyle: {
+            width: '80%',
+          },
+          headerTitleAlign: 'center',
+          headerMode: 'float',
+          headerTitle: props => (
+            <SearchBar
+              style={{backgroundColor: '#fff', opacity: 1, width: '100%'}}
+              {...props}
+              placeholderTextColor="#d1d1d1"
+            />
+          ),
+        }}
       />
       <Stack.Screen
         name="Profile"
@@ -139,6 +183,7 @@ const MainNavigator = () => {
           gestureDirection: gestureDirection(route),
         })}
       />
+      <Stack.Screen name="StatusModal" component={StatusModal} />
     </Stack.Navigator>
   );
 };

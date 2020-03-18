@@ -12,30 +12,32 @@ import {
   Dimensions,
   Button,
   Animated,
+  TouchableOpacity,
 } from 'react-native';
 import {RecyclerListView, DataProvider, LayoutProvider} from 'recyclerlistview';
 import faker from 'faker';
-import StoryBtn from '@components/storyBtn';
-import {useNavigation} from '@react-navigation/native';
-// import BottomNav from '../../components/BottomNav';
+import ViewPager from '@react-native-community/viewpager';
 
+// import BottomNav from '../../components/BottomNav';
+import UserList from '@components/UserList';
+import Header from '@components/Header';
 const {width, height} = Dimensions.get('window');
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.scrollY = new Animated.Value(0);
+
     this.startFooterHeight = 80;
     this.endFotterHeight = 50;
     const fakeData = [];
-    for (let i = 0; i < 10; i += 1) {
+    for (let i = 0; i < 100; i += 1) {
       fakeData.push({
         type: 'NORMAL',
         item: {
           id: i,
           image: faker.image.avatar(),
-          // name: faker.name.firstName(),
-          // description: faker.random.words(5),
+          name: faker.name.firstName(),
+          //   description: faker.random.words(5),
         },
       });
     }
@@ -51,11 +53,11 @@ class Home extends React.Component {
         switch (type) {
           case 'NORMAL':
             dim.width = width;
-            dim.height = height;
+            dim.height = 70;
             break;
           default:
-            dim.width = width;
-            dim.height = height;
+            dim.width = 0;
+            dim.height = 0;
             break;
         }
       },
@@ -69,8 +71,8 @@ class Home extends React.Component {
         return (
           // <Image style={styles.image} source={{ uri: image }} />
 
-          <View style={{flex: 1}}>
-            <Image style={styles.image} source={{uri: image}} />
+          <View style={{backgroundColor: '#fff'}}>
+            <UserList userName={name} image={image} />
           </View>
         );
     }
@@ -80,18 +82,30 @@ class Home extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar
-          barStyle="light-content"
+          barStyle="dark-content"
           translucent
           backgroundColor="transparent"
         />
-        <StoryBtn />
+
+        {/* <View style={styles.tabContainer}>
+          <TouchableOpacity style={styles.activePil}>
+            <Text>Chat</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.pil}>
+            <Text>Request</Text>
+          </TouchableOpacity>
+        </View> */}
         <RecyclerListView
-          style={{flex: 1, height: height, width: width}}
+          style={{
+            flex: 1,
+            height: height,
+            width: width,
+            backgroundColor: '#fff',
+          }}
           rowRenderer={this.rowRenderer}
           dataProvider={this.state.list}
           layoutProvider={this.layoutProvider}
           initialOffset={1}
-          pagingEnabled={true}
           onScroll={this.props.onScroll}
           showsVerticalScrollIndicator={false}
           // ItemAnimator={s => console.log(s)}
@@ -104,13 +118,13 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
   },
   body: {
     maxWidth: width,
   },
   image: {
-    height: height,
+    height: 100,
     width: width,
   },
   name: {
@@ -120,6 +134,30 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 14,
     opacity: 0.5,
+  },
+  tabContainer: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    height: 45,
+    backgroundColor: '#fff',
+    marginTop: 20,
+  },
+  activePil: {
+    backgroundColor: '#fff',
+    borderBottomColor: '#000',
+    borderBottomWidth: 2,
+    alignItems: 'center',
+    paddingTop: 10,
+    flex: 2,
+    marginRight: 5,
+  },
+  pil: {
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    paddingTop: 10,
+    flex: 2,
+    borderRadius: 5,
+    marginRight: 5,
   },
 });
 

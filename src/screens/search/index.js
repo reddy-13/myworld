@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, StatusBar, Dimensions} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  StatusBar,
+  Dimensions,
+  ScrollView,
+} from 'react-native';
 import Styles from './Style';
 
 import {SliderBox} from 'react-native-image-slider-box';
@@ -24,35 +31,38 @@ export default class extends Component {
 
   render() {
     return (
-      <View style={Styles.container}>
-        <StatusBar
-          barStyle="light-content"
-          translucent
-          backgroundColor="transparent"
-        />
-        <SliderBox
-          images={this.state.images}
-          sliderBoxHeight={350}
-          dotStyle={Styles.customDots}
-        />
-        <View style={Styles.searchContainer}>
-          <SearchBar
-            SearchBar={true}
-            placeholderTextColor="#fff"
-            borderRadius={25}
+      <ScrollView>
+        <View style={Styles.container}>
+          <StatusBar
+            barStyle="light-content"
+            translucent
+            backgroundColor="transparent"
           />
+          <SliderBox
+            images={this.state.images}
+            sliderBoxHeight={350}
+            dotStyle={Styles.customDots}
+          />
+          <View style={Styles.searchContainer}>
+            <SearchBar
+              SearchBar={true}
+              placeholderTextColor="#fff"
+              borderRadius={25}
+              style={{backgroundColor: 'rgba(0, 0, 0, 0.30)'}}
+            />
+          </View>
+          <TrendingTag tagName="Moviecreem" tagCount="656M" />
+          <View
+            style={{
+              height: 200,
+              width: '100%',
+              borderBottomLeftRadius: 25,
+              borderTopRightRadius: 25,
+            }}>
+            <RecycleView />
+          </View>
         </View>
-        <TrendingTag tagName="Moviecreem" tagCount="656M" />
-        <View
-          style={{
-            height: 200,
-            width: '100%',
-            borderBottomLeftRadius: 25,
-            borderTopRightRadius: 25,
-          }}>
-          <RecycleView />
-        </View>
-      </View>
+      </ScrollView>
     );
   }
 }

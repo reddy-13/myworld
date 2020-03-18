@@ -16,8 +16,8 @@ import CameraScreen from '@screens/Camera/';
 import SettingsIcon from '@screens/Icons/SettingsIcon';
 // import icon from '../assets/icons';
 import Chatscreen from '@screens/Chat';
-import StickySample from '@screens/Test';
-
+import StickySample from '@screens/User/Sticky';
+import RescentCard from '@components/profile/RescentCard';
 const HeaderShown = route => {
   const routeName = route.state
     ? route.state.routes[route.state.index].name
@@ -61,7 +61,7 @@ const BottomNav = state => {
           component={CameraScreen}
           options={{tabBarVisible: false}}
         />
-        <Tab.Screen name="Chat" component={Chatscreen} />
+
         <Tab.Screen name="Profile" component={ProfileScreen} />
         {/* <Tab.Screen name="Seticon" component={SettingsIcon} /> */}
       </Tab.Navigator>

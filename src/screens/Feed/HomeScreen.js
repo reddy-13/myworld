@@ -2,11 +2,13 @@
 //Home Screen For Video Feeds
 //code date :  28-02-2020 //
 
-import React from 'react';
-import {View, Text, Button} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, Button, Modal, Image, Dimensions} from 'react-native';
 import Home from '@components/Home';
+import faker from 'faker';
+import {useNavigation} from '@react-navigation/native';
 
-const HomeScreen = (props, navigation) => {
+const HomeScreen = ({navigation, route}) => {
   return (
     <View style={{flex: 1}}>
       <Home

@@ -8,34 +8,30 @@ import {
   Text,
   Image,
   StyleSheet,
-  StatusBar,
   Dimensions,
-  Button,
   Animated,
+  TouchableOpacity,
 } from 'react-native';
 import {RecyclerListView, DataProvider, LayoutProvider} from 'recyclerlistview';
 import faker from 'faker';
-import StoryBtn from '@components/storyBtn';
-import {useNavigation} from '@react-navigation/native';
-// import BottomNav from '../../components/BottomNav';
 
 const {width, height} = Dimensions.get('window');
 
-class Home extends React.Component {
+class StoryCard extends React.Component {
   constructor(props) {
     super(props);
-    this.scrollY = new Animated.Value(0);
+
     this.startFooterHeight = 80;
     this.endFotterHeight = 50;
     const fakeData = [];
-    for (let i = 0; i < 10; i += 1) {
+    for (let i = 0; i < 100; i += 1) {
       fakeData.push({
         type: 'NORMAL',
         item: {
           id: i,
           image: faker.image.avatar(),
-          // name: faker.name.firstName(),
-          // description: faker.random.words(5),
+          name: faker.name.firstName(),
+          tilte: faker.random.words(3),
         },
       });
     }
@@ -51,11 +47,11 @@ class Home extends React.Component {
         switch (type) {
           case 'NORMAL':
             dim.width = width;
-            dim.height = height;
+            dim.height = height / 5;
             break;
           default:
-            dim.width = width;
-            dim.height = height;
+            dim.width = 0;
+            dim.height = 0;
             break;
         }
       },
@@ -63,14 +59,28 @@ class Home extends React.Component {
   }
 
   rowRenderer = (type, data) => {
-    const {image, name, description} = data.item;
+    const {image, name, tilte} = data.item;
     switch (type) {
       case 'NORMAL':
         return (
-          // <Image style={styles.image} source={{ uri: image }} />
-
-          <View style={{flex: 1}}>
-            <Image style={styles.image} source={{uri: image}} />
+          <View>
+            <View style={styles.row}>
+              <View style={styles.rowImageContainer}>
+                <Image
+                  source={{uri: image}}
+                  style={{width: 65, height: 130, borderRadius: 7}}
+                />
+              </View>
+              <View style={styles.rigthCard}>
+                <Text>NDTV India</Text>
+                <Text style={{fontSize: 19, fontWeight: '700'}}>{tilte}</Text>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{fontSize: 16}}>345K views</Text>
+                  <Text style={{fontSize: 16, paddingLeft: 5}}>.</Text>
+                  <Text style={{fontSize: 16}}> 3h </Text>
+                </View>
+              </View>
+            </View>
           </View>
         );
     }
@@ -79,19 +89,17 @@ class Home extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar
-          barStyle="light-content"
-          translucent
-          backgroundColor="transparent"
-        />
-        <StoryBtn />
         <RecyclerListView
-          style={{flex: 1, height: height, width: width}}
+          style={{
+            flex: 1,
+            height: height,
+            width: width,
+            backgroundColor: '#fff',
+          }}
           rowRenderer={this.rowRenderer}
           dataProvider={this.state.list}
           layoutProvider={this.layoutProvider}
           initialOffset={1}
-          pagingEnabled={true}
           onScroll={this.props.onScroll}
           showsVerticalScrollIndicator={false}
           // ItemAnimator={s => console.log(s)}
@@ -104,23 +112,22 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
   },
-  body: {
-    maxWidth: width,
+  row: {
+    flexDirection: 'row',
   },
-  image: {
-    height: height,
-    width: width,
+  rowImageContainer: {
+    flex: 0.9,
+    padding: 20,
+    paddingRight: 0,
+    paddingBottom: 0,
   },
-  name: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  description: {
-    fontSize: 14,
-    opacity: 0.5,
+  rigthCard: {
+    flex: 3,
+    paddingTop: 30,
+    paddingRight: 20,
   },
 });
 
-export default Home;
+export default StoryCard;

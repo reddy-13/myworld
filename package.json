@@ -29,6 +29,7 @@
     "react-native-svg-transformer": "^0.14.3",
     "react-native-svg-uri": "^1.2.3",
     "react-native-swipe-gestures": "^1.0.4",
+    "react-native-tab-view": "^2.13.0",
     "react-native-vertical-view-pager": "^0.1.1",
     "recyclerlistview": "^3.0.0",
     "recyclerlistview-gridlayoutprovider": "^1.0.1"
