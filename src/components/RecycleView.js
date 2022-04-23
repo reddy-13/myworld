@@ -50,31 +50,31 @@ class RecycleView extends React.Component {
     switch (type) {
       case 'ITEM_SPAN_1':
         return (
-          <View style={{borderColor: '#fff', borderWidth: 1}}>
+          <View style={{borderColor: '#fff', borderWidth: 0.5}}>
             <Image style={{height: width / 2}} source={{uri: image}} />
           </View>
         );
       case 'ITEM_SPAN_2':
         return (
-          <View style={{borderColor: '#fff', borderWidth: 1}}>
+          <View style={{borderColor: '#fff', borderWidth: 0.5}}>
             <Image style={{height: 100}} source={{uri: image}} />
           </View>
         );
       case 'ITEM_SPAN_3':
         return (
-          <View style={{borderColor: '#fff', borderWidth: 1}}>
+          <View style={{borderColor: '#fff', borderWidth: 0.5}}>
             <Image style={{height: 100}} source={{uri: image}} />
           </View>
         );
       case 'ITEM_SPAN_4':
         return (
-          <View style={{borderColor: '#fff', borderWidth: 1}}>
+          <View style={{borderColor: '#fff', borderWidth: 0.5}}>
             <Image style={{height: 100}} source={{uri: image}} />
           </View>
         );
       case 'ITEM_SPAN_5':
         return (
-          <View style={{borderColor: '#fff', borderWidth: 1}}>
+          <View style={{borderColor: '#fff', borderWidth: 0.5}}>
             <Image style={{height: 200}} source={{uri: image}} />
           </View>
         );
@@ -96,6 +96,7 @@ class RecycleView extends React.Component {
           dataProvider={this.state.list}
           layoutProvider={this.layoutProvider}
           isHorizontal={true}
+          showsHorizontalScrollIndicator={false}
         />
       </View>
     );
@@ -105,7 +106,7 @@ class RecycleView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
+    //backgroundColor: '#fff',
     // margin: 0,
     // paddingLeft: 9,
     // borderTopLeftRadius: 25,

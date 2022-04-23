@@ -14,8 +14,10 @@ import {SliderBox} from 'react-native-image-slider-box';
 import SearchBar from '@components/SearchBar';
 import TrendingTag from '@components/TrendingTag';
 import RecycleView from '@components/RecycleView';
+import TwoImageView from '@components/twoImageView';
+import ThreeImageView from '@components/threeImageView';
 const {width, height} = Dimensions.get('window');
-export default class extends Component {
+export default class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,29 +42,64 @@ export default class extends Component {
           />
           <SliderBox
             images={this.state.images}
-            sliderBoxHeight={350}
+            sliderBoxHeight={300}
             dotStyle={Styles.customDots}
           />
           <View style={Styles.searchContainer}>
             <SearchBar
               SearchBar={true}
               placeholderTextColor="#fff"
-              borderRadius={25}
-              style={{backgroundColor: 'rgba(0, 0, 0, 0.30)'}}
+              borderRadius="25"
+              style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.30)',
+              }}
             />
           </View>
+
+          <TrendingTag tagName="FunDance" tagCount="60M" />
+          <View
+            style={{
+              height: 200,
+              backgroundColor: '#fff',
+              width: '100%',
+              marginLeft: 15,
+              overflow: 'hidden',
+              borderBottomLeftRadius: 15,
+              borderTopLeftRadius: 15,
+            }}>
+            <ThreeImageView />
+          </View>
+
           <TrendingTag tagName="Moviecreem" tagCount="656M" />
           <View
             style={{
               height: 200,
+              backgroundColor: '#fff',
               width: '100%',
-              borderBottomLeftRadius: 25,
-              borderTopRightRadius: 25,
+              marginLeft: 15,
+              overflow: 'hidden',
+              borderBottomLeftRadius: 15,
+              borderTopLeftRadius: 15,
             }}>
             <RecycleView />
+          </View>
+
+          <TrendingTag tagName="MyworldQuiz" tagCount="30M" />
+          <View
+            style={{
+              height: 200,
+              width: '100%',
+              backgroundColor: '#fff',
+              marginLeft: 15,
+              overflow: 'hidden',
+              borderBottomLeftRadius: 15,
+              borderTopLeftRadius: 15,
+            }}>
+            <TwoImageView />
           </View>
         </View>
       </ScrollView>
     );
   }
 }
+Search.navigationOptions = {};

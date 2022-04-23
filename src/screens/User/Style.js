@@ -5,7 +5,7 @@ export default {
   },
   profileContainer: {
     flexDirection: 'row',
-    height: '20%',
+    // height: '20%',
     marginTop: 50,
   },
   profileInner: {
@@ -36,7 +36,7 @@ export default {
     paddingRight: 50,
     paddingLeft: 20,
     paddingBottom: 20,
-    height: '8%',
+    // height: '8%',
     backgroundColor: '',
   },
   descriptionText: {

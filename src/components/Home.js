@@ -17,7 +17,7 @@ import {RecyclerListView, DataProvider, LayoutProvider} from 'recyclerlistview';
 import faker from 'faker';
 import StoryBtn from '@components/storyBtn';
 import {useNavigation} from '@react-navigation/native';
-// import BottomNav from '../../components/BottomNav';
+import BottomNav from '@navigation/BottomNavigation';
 
 const {width, height} = Dimensions.get('window');
 
@@ -61,6 +61,9 @@ class Home extends React.Component {
       },
     );
   }
+  tabHeight = () => {
+    <tabNavMargin tab_margin={30} />;
+  };
 
   rowRenderer = (type, data) => {
     const {image, name, description} = data.item;
@@ -77,6 +80,8 @@ class Home extends React.Component {
   };
 
   render() {
+    const {navigation} = this.props;
+
     return (
       <View style={styles.container}>
         <StatusBar
@@ -84,6 +89,7 @@ class Home extends React.Component {
           translucent
           backgroundColor="transparent"
         />
+
         <StoryBtn />
         <RecyclerListView
           style={{flex: 1, height: height, width: width}}
@@ -91,9 +97,10 @@ class Home extends React.Component {
           dataProvider={this.state.list}
           layoutProvider={this.layoutProvider}
           initialOffset={1}
-          pagingEnabled={true}
-          onScroll={this.props.onScroll}
+          pagingEnabled={true} // to achive tiktok ui
+          // onScroll={e => console.log(e)}
           showsVerticalScrollIndicator={false}
+          onVisibleInicesChanged={() => console.log('fuck')}
           // ItemAnimator={s => console.log(s)}
         />
       </View>
@@ -104,6 +111,7 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
     backgroundColor: '#000',
   },
   body: {

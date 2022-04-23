@@ -2,8 +2,11 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Text, Platform} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import CameraRoll from '@react-native-community/cameraroll';
+
 // import {SvgCssUri} from 'react-native-svg';
 // import Icon from '../../assets/icons/icon.svg';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 class CameraComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +15,8 @@ class CameraComponent extends React.Component {
 
     this.state = {
       isRecording: false,
+      type: RNCamera.Constants.Type.front,
+      isFlash: RNCamera.Constants.FlashMode.off,
     };
   }
 
@@ -59,49 +64,121 @@ class CameraComponent extends React.Component {
     }
   };
 
+  flash = flash => {
+    if (flash == RNCamera.Constants.FlashMode.off) {
+      this.setState({isFlash: RNCamera.Constants.FlashMode.on});
+    } else if (flash == RNCamera.Constants.FlashMode.on) {
+      this.setState({isFlash: RNCamera.Constants.FlashMode.off});
+    }
+  };
+
   render() {
+    const {navigation} = this.props;
     return (
       <View style={styles.cameraContainer}>
+        <View
+          style={{
+            position: 'absolute',
+            zIndex: 10,
+            width: '100%',
+            alignItems: 'center',
+            bottom: 80,
+          }}>
+          {(!this.state.isRecording && (
+            <MaterialCommunityIcons
+              onPress={this.startRecording}
+              name="circle-outline"
+              style={{color: 'white', fontSize: 80}}
+            />
+          )) || (
+            <MaterialCommunityIcons
+              onPress={this.stopRecording}
+              name="circle-outline"
+              style={{
+                color: 'yellow',
+                fontSize: 80,
+              }}
+            />
+          )}
+        </View>
         <RNCamera
           ref={cam => {
             this.camera = cam;
           }}
+          flashMode={this.state.isFlash}
           style={styles.preview}
+          type={this.state.type}
           captureAudio={true}
-          captureMode={RNCamera.Constants.Type.back}
+          captureMode={this.state.type}
         />
+
         <View style={[styles.overlay, styles.bottomOverlay]}>
-          {(!this.state.isRecording && (
-            <TouchableOpacity
-              style={styles.captureButton}
-              onPress={this.startRecording}>
-              {/* <Icon width="50" height="50" /> */}
-              <Text>START</Text>
-            </TouchableOpacity>
+          <MaterialCommunityIcons
+            onPress={() => navigation.navigate('Gallery')}
+            name="image-multiple"
+            style={{color: 'white', fontSize: 46}}
+          />
+          {(this.state.isFlash === RNCamera.Constants.FlashMode.off && (
+            <MaterialCommunityIcons
+              onPress={() => this.flash(this.state.isFlash)}
+              name="flash"
+              style={{color: 'white', fontSize: 46, opacity: 0.5}}
+            />
           )) || (
-            <TouchableOpacity
-              style={styles.captureButton}
-              onPress={this.stopRecording}>
-              <Text> STOP</Text>
-            </TouchableOpacity>
+            <MaterialCommunityIcons
+              onPress={() => {
+                this.setState({
+                  isFlash:
+                    this.state.isFlash === RNCamera.Constants.FlashMode.on
+                      ? RNCamera.Constants.FlashMode.off
+                      : RNCamera.Constants.FlashMode.on,
+                });
+              }}
+              name="flash"
+              style={{color: 'white', fontSize: 46}}
+            />
           )}
+
+          <MaterialCommunityIcons
+            name="plus-circle"
+            style={{color: 'white', fontSize: 46}}
+          />
+          <MaterialCommunityIcons
+            onPress={() => {
+              this.setState({
+                type:
+                  this.state.type === RNCamera.Constants.Type.front
+                    ? RNCamera.Constants.Type.back
+                    : RNCamera.Constants.Type.front,
+              });
+            }}
+            name="autorenew"
+            style={{color: 'white', fontSize: 46}}
+          />
+          <MaterialCommunityIcons
+            name="playlist-music"
+            style={{color: 'white', fontSize: 46}}
+          />
         </View>
       </View>
     );
   }
 }
 
+// const myNavigation = props => {
+//   const navigation = useNavigation();
+//   return <CameraComponent {...props} navigation={navigation} />;
+// };
 const styles = StyleSheet.create({
   overlay: {
+    flex: 1,
     position: 'absolute',
     padding: 16,
     right: 0,
     left: 0,
-    alignItems: 'center',
   },
   cameraContainer: {
     flex: 1,
-    flexDirection: 'row',
   },
   preview: {
     flex: 1,
@@ -110,14 +187,14 @@ const styles = StyleSheet.create({
   },
   bottomOverlay: {
     bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: 'transparent', //'rgba(0,0,0,0.4)',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   captureButton: {
     padding: 15,
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     borderRadius: 40,
   },
 });

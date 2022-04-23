@@ -1,9 +1,21 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  StatusBar,
+} from 'react-native';
 import faker from 'faker';
 const ProfileContainer = () => {
   return (
-    <View>
+    <View style={{heigt: 240}}>
+      <StatusBar
+        barStyle="dark-content"
+        translucent
+        backgroundColor="transparent"
+      />
       <View style={styles.profileContainer}>
         <View style={styles.profileInner}>
           <View style={styles.userNameContainer}>
@@ -18,7 +30,11 @@ const ProfileContainer = () => {
         <View style={styles.profileImageContainer}>
           <Image
             source={{uri: faker.image.avatar()}}
-            style={{width: 110, height: 110, borderRadius: 55}}
+            style={{
+              width: 100,
+              height: 100,
+              borderRadius: 55,
+            }}
           />
         </View>
       </View>
@@ -44,39 +60,39 @@ const ProfileContainer = () => {
 const styles = StyleSheet.create({
   profileContainer: {
     flexDirection: 'row',
-    height: '20%',
-    marginTop: 50,
+    // height: '20%',
+    paddingTop: 20,
+    paddingBottom: 10,
+    marginTop: 40,
   },
   profileInner: {
     flex: 3,
   },
   userNameContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 40,
+    paddingTop: 10,
+    paddingLeft: 15,
   },
   userNameText: {
     fontWeight: 'bold',
-    fontSize: 27,
+    fontSize: 25,
   },
   followerContainer: {
     flexDirection: 'row',
-    marginLeft: 20,
+    marginLeft: 15,
     marginTop: 15,
   },
   profileImageContainer: {
     flex: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    paddingRight: 15,
   },
   decriptionContainer: {
     justifyContent: 'space-around',
     flexDirection: 'column',
     paddingRight: 50,
-    paddingLeft: 20,
+    paddingLeft: 15,
     paddingBottom: 20,
-    height: '8%',
-    backgroundColor: '#fff',
   },
   descriptionText: {
     fontSize: 15,
@@ -85,17 +101,17 @@ const styles = StyleSheet.create({
   tabs: {
     justifyContent: 'space-between',
     flexDirection: 'row',
-    padding: 3,
-    height: 45,
-    marginLeft: 20,
-    marginRight: 20,
+    padding: 2,
+    height: 40,
+    marginLeft: 15,
+    marginRight: 15,
     backgroundColor: '#f1f1f1',
     borderRadius: 7,
   },
   folloBtn: {
     backgroundColor: '#fff',
     alignItems: 'center',
-    paddingTop: 10,
+    paddingTop: 7,
     flex: 2,
     borderRadius: 5,
     marginRight: 5,
@@ -103,7 +119,7 @@ const styles = StyleSheet.create({
   messageBtn: {
     backgroundColor: 'transparent',
     alignItems: 'center',
-    paddingTop: 10,
+    paddingTop: 7,
     flex: 2,
     borderRadius: 5,
     marginRight: 5,

@@ -12,7 +12,7 @@ import {Text} from '@constants/atoms/Text';
 import faker from 'faker';
 const {width, height} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 const StoryBtn = props => {
   const navigation = useNavigation();
   navigation.setOptions({});
@@ -25,10 +25,10 @@ const StoryBtn = props => {
         justifyContent: 'flex-end',
         alignItems: 'center',
         width: width,
-
         position: 'absolute',
         zIndex: 10,
-        marginTop: 40,
+        paddingTop: 35,
+        paddingRight: 5,
         marginBottom: 40,
         right: 10,
       }}>
@@ -37,13 +37,13 @@ const StoryBtn = props => {
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: '#ddd',
+          backgroundColor: 'transparent',
           height: 35,
           width: 55,
           borderRadius: 10,
           margin: 1,
         }}>
-        <Text>Chat</Text>
+        <Ionicons name="ios-chatboxes" size={40} color="#555" />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate('StatusModal')}
@@ -56,8 +56,8 @@ const StoryBtn = props => {
 
 const styles = StyleSheet.create({
   image: {
-    height: 55,
-    width: 55,
+    height: 50,
+    width: 50,
     borderRadius: 30,
     marginRight: 20,
   },

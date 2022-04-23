@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Button} from 'react-native';
 import SvgUri from 'react-native-svg-uri';
-import settingsIcon from '../../assets/icons/settingsIcon.svg';
+// import settingsIcon from '../../assets/icons/settingsIcon.svg';
 
 const SettingsIcon = props => {
   return (

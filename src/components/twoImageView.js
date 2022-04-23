@@ -2,36 +2,36 @@
 //Home Screen For Video Feeds
 //code date :  28-02-2020 //
 
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   View,
-  Text,
   Image,
   StyleSheet,
+  StatusBar,
   Dimensions,
   Animated,
-  TouchableOpacity,
 } from 'react-native';
 import {RecyclerListView, DataProvider, LayoutProvider} from 'recyclerlistview';
 import faker from 'faker';
+import StoryBtn from '@components/storyBtn';
 
 const {width, height} = Dimensions.get('window');
 
-class RescentCard extends React.Component {
+class twoImageView extends React.Component {
   constructor(props) {
     super(props);
-
+    this.scrollY = new Animated.Value(0);
     this.startFooterHeight = 80;
     this.endFotterHeight = 50;
     const fakeData = [];
-    for (let i = 0; i < 100; i += 1) {
+    for (let i = 0; i < 10; i += 1) {
       fakeData.push({
         type: 'NORMAL',
         item: {
           id: i,
           image: faker.image.avatar(),
-          name: faker.name.firstName(),
-          tilte: faker.random.words(3),
+          // name: faker.name.firstName(),
+          // description: faker.random.words(5),
         },
       });
     }
@@ -46,8 +46,8 @@ class RescentCard extends React.Component {
       (type, dim) => {
         switch (type) {
           case 'NORMAL':
-            dim.width = width;
-            dim.height = height / 5;
+            dim.width = width / 2 - 0.0001;
+            dim.height = height;
             break;
           default:
             dim.width = width;
@@ -59,26 +59,20 @@ class RescentCard extends React.Component {
   }
 
   rowRenderer = (type, data) => {
-    const {image, name, tilte} = data.item;
+    const {image, name, description} = data.item;
     switch (type) {
       case 'NORMAL':
         return (
-          <View style={styles.row}>
-            <View style={styles.rowImageContainer}>
-              <Image
-                source={{uri: image}}
-                style={{width: 65, height: 130, borderRadius: 7}}
-              />
-            </View>
-            <View style={styles.rigthCard}>
-              <Text>NDTV India</Text>
-              <Text style={{fontSize: 19, fontWeight: '700'}}>{tilte}</Text>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{fontSize: 16}}>345K views</Text>
-                <Text style={{fontSize: 16, paddingLeft: 5}}>.</Text>
-                <Text style={{fontSize: 16}}> 3h </Text>
-              </View>
-            </View>
+          // <Image style={styles.image} source={{ uri: image }} />
+
+          <View
+            style={{
+              flex: 1,
+              borderColor: ' #fff',
+              borderWidth: 1,
+              backgroundColor: '#fff',
+            }}>
+            <Image style={styles.image} source={{uri: image}} />
           </View>
         );
     }
@@ -88,14 +82,12 @@ class RescentCard extends React.Component {
     return (
       <View style={styles.container}>
         <RecyclerListView
-          style={{
-            backgroundColor: '#fff',
-          }}
+          style={{flex: 1, height: height, width: width}}
           rowRenderer={this.rowRenderer}
           dataProvider={this.state.list}
           layoutProvider={this.layoutProvider}
-          onScroll={this.props.onScroll}
-          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          isHorizontal={true}
           // ItemAnimator={s => console.log(s)}
         />
       </View>
@@ -108,22 +100,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  row: {
-    flexDirection: 'row',
-    marginBottom: 20,
+  body: {
+    maxWidth: width,
   },
-  rowImageContainer: {
-    flex: 0.9,
-    flexDirection: 'column',
-    padding: 20,
-    paddingRight: 0,
-    paddingBottom: 0,
+  image: {
+    height: 200,
+    width: width / 2 - 0.0001,
   },
-  rigthCard: {
-    flex: 3,
-    paddingTop: 30,
-    paddingRight: 20,
+  name: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  description: {
+    fontSize: 14,
+    opacity: 0.5,
   },
 });
 
-export default RescentCard;
+export default twoImageView;

@@ -23,6 +23,8 @@ import {Button} from '@constants/atoms/Button';
 import {Text} from '@constants/atoms/Text';
 import StatusModal from '@components/StatusModal';
 import SearchBar from '@components/SearchBar';
+import ImageGallery from '@components/ImageGallery';
+
 // import classes for testing
 import imagegrid from '@classes/imagegrid';
 // inistiating Stact navigaton
@@ -175,6 +177,7 @@ const MainNavigator = () => {
           headerShown: true,
         }}
       />
+      <Stack.Screen name="Gallery" component={ImageGallery} />
       <Stack.Screen
         name="Camera"
         component={Camera}
